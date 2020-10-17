@@ -72,7 +72,7 @@ const resolvers = mergeResolvers(
 const apolloServer = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ req }) => ({ req })
+    context: ({ req }) => ({ req,pubsub })
 })
 
 // applyMiddleware method connect ApolloServer to a specific HTTP framework
@@ -146,6 +146,7 @@ app.post('/emailToMe', (req, res, next) => {
 
 
 httpserver.listen(process.env.PORT, function () {
-    console.log(`server is running at htt://localhost:${process.env.PORT}`)
-    console.log(`graphql server is running at htt://localhost:${process.env.PORT}${apolloServer.graphqlPath}`)
+    console.log(`server is running at http://localhost:${process.env.PORT}`)
+    console.log(`graphql server is running at http://localhost:${process.env.PORT}${apolloServer.graphqlPath}`)
+    console.log(`subscription is ready at http://localhost:${process.env.PORT}${apolloServer.subscriptionsPath}`);
 })
