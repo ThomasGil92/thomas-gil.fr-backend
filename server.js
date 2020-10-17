@@ -80,6 +80,7 @@ apolloServer.applyMiddleware({ app })
 
 // server
 const httpserver = http.createServer(app)
+apolloServer.installSubscriptionHandlers(httpserver)
 
 // Rest endpoint
 app.get('/rest', authCheck, function (req, res) {
