@@ -50,7 +50,7 @@ const db = async () => {
             useCreateIndex: true,
             useFindAndModify: false
         })
-        console.log("DB connected on: ", process.env.DATABASE)
+        console.log("DB connected on ", process.env.DATABASE)
     } catch (error) {
         console.log(error)
     }
