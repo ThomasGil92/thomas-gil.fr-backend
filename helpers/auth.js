@@ -3,8 +3,9 @@ var admin = require("firebase-admin");
 var serviceAccount = require("../config/fbServiceAccountKey.json");
 
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
-    // databaseURL: "https://gqlreactnode925.firebaseio.com"
+    //credential: admin.credential.applicationDefault(),
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: process.env.FIREBASE_URL
 });
 
 exports.authCheck = async (req) => {
@@ -21,8 +22,8 @@ exports.authCheck = async (req) => {
 exports.authCheckMiddleware = (req, res, next) => {
     if (req.headers.authtoken) {
         admin
-        .auth()
-        .verifyIdToken(req.headers.authtoken)
+            .auth()
+            .verifyIdToken(req.headers.authtoken)
             .then((result) => {
                 next()
             })
