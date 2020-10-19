@@ -124,14 +124,17 @@ app.post('/removeimage', authCheckMiddleware, (req, res) => {
 app.post('/emailToMe', (req, res, next) => {
     const mail = {
         from: req.body.email,
-        to: 'tg.contactform@gmail.com',
-        subject: req.body.subject,
+        to: 'tgil849@gmail.com',
+        subject: req.body.email,
         text: `
       from:
       ${req.body.email} 
+      subject:
+      ${req.body.subject}
       message: 
       ${req.body.message}`
     }
+    console.log(req.body)
     transporter.sendMail(mail, (err, data) => {
         if (err) {
             res.json({
