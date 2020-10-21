@@ -12,6 +12,14 @@ const siteSchema = new mongoose.Schema({
         required: true,
         text: true
     },
+    github:{
+        type:String,
+        trim:true
+    },
+    url:{
+        type:String,
+        trim:true
+    },
     postedBy:{
         type:ObjectId,
         ref:'User'
