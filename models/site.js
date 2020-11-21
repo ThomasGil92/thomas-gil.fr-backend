@@ -18,7 +18,14 @@ const siteSchema = new mongoose.Schema({
     },
     url:{
         type:String,
-        trim:true
+        trim:true,
+        default:"https://thomas-g.herokuapp.com"
+    },
+    missions:{
+        type:Array
+    },
+    technos:{
+        type:Array
     },
     postedBy:{
         type:ObjectId,

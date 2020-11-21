@@ -6,6 +6,8 @@ type Site{
     _id:ID!
     title:String!
     description:String!
+    missions:[String]
+    technos:[String!]
     url:String!
     github:String
     postedBy:User!
@@ -23,6 +25,7 @@ input SiteInput{
     title:String!
     description:String!
     image:ImageInput
+    missions:[String]
     url:String!
     github:String
 }
@@ -31,6 +34,7 @@ input SiteUpdateInput {
     _id:String!
     title:String!
     description:String!
+    missions:[String]
     url:String!
     github:String
     image:ImageInput

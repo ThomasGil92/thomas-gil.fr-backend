@@ -9,9 +9,6 @@ const User = require('../models/user')
 // mutation
 const siteCreate = async (parents, args, { req }) => {
     const currentUser = await authCheck(req)
-    if (args.input.title.trim() === '') {
-        throw new Error('Tous les champs sont requis')
-    }
 
     const currentUserFromDb = await User.findOne({
         email: currentUser.email
@@ -30,29 +27,29 @@ const siteCreate = async (parents, args, { req }) => {
     return newSite
 }
 
-const siteDelete=async(parent,args,{req})=>{
+const siteDelete = async (parent, args, { req }) => {
     const currentUser = await authCheck(req);
-    const currentUserFromDb = await User.findOne({ 
+    const currentUserFromDb = await User.findOne({
         email: currentUser.email
-     })
-     .exec();
+    })
+        .exec();
 
-    const siteToDelete = await Site.findById({ 
+    const siteToDelete = await Site.findById({
         _id: args.siteId
-     })
-     .exec();
+    })
+        .exec();
 
-    if (currentUserFromDb._id.toString() !== siteToDelete.postedBy._id.toString()){
+    if (currentUserFromDb._id.toString() !== siteToDelete.postedBy._id.toString()) {
         throw new Error('Unauthorized action');
     }
 
-    let deletedSite = await Site.findByIdAndDelete({ 
-        _id: args.siteId 
+    let deletedSite = await Site.findByIdAndDelete({
+        _id: args.siteId
     })
         .exec()
         .then((site) => site.populate('postedBy', '_id name email').execPopulate());
 
-    
+
 
     return deletedSite;
 }
@@ -100,8 +97,8 @@ const siteUpdate = async (parent, args, { req }) => {
         { ...args.input },
         { new: true })
         .exec()
-    .then(site => site.populate('postedBy', '_id name email')
-      .execPopulate())
+        .then(site => site.populate('postedBy', '_id name email')
+            .execPopulate())
 
 
     /* pubsub.publish(POST_UPDATED, {
