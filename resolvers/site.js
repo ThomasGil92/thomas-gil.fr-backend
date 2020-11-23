@@ -13,7 +13,7 @@ const siteCreate = async (parents, args, { req }) => {
     const currentUserFromDb = await User.findOne({
         email: currentUser.email
     })
-
+console.log(args.input)
     let newSite = await new Site({
         ...args.input,
         postedBy: currentUserFromDb._id
@@ -94,7 +94,12 @@ const siteUpdate = async (parent, args, { req }) => {
 
     let updatedSite = await Site.findByIdAndUpdate(
         args.input._id,
-        { ...args.input },
+        {
+            ...args.input,
+            missions: Array.isArray(args.input.missions) ? args.input.missions : args.input.missions.split(',').map(mission => mission.trim()),
+            technos: Array.isArray(args.input.technos) ? args.input.technos : args.input.technos[0].split(',').map(techno => techno.trim())
+        },
+
         { new: true })
         .exec()
         .then(site => site.populate('postedBy', '_id name email')
